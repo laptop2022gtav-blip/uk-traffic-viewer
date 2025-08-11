@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* basic smooth fonts */
+/* optional niceties */
+:root { color-scheme: light dark; }
 html, body, #root { height: 100%; }
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
