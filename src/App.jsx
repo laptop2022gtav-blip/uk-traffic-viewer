@@ -69,7 +69,7 @@ function Header({ dark, setDark }) {
     <header className="w-full flex items-center justify-between py-4">
       <div className="flex items-center gap-3">
         <div className="h-9 w-9 rounded-2xl bg-gradient-to-br from-emerald-500 to-sky-600" />
-        <span className="font-semibold text-lg tracking-tight">UK Traffic – TomTom</span>
+        <span className="font-semibold text-lg tracking-tight">CDA UK Traffic</span>
       </div>
       <div className="flex items-center gap-2">
         <DarkToggle dark={dark} setDark={setDark} />
