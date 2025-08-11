@@ -218,23 +218,31 @@ function IncidentLayer({ apiKey, onCount }) {
   }
 
   async function fetchIncidents(map) {
-    if (!apiKey) return;
-    const b = map.getBounds();
-    const bbox = [b.getWest(), b.getSouth(), b.getEast(), b.getNorth()].join(",");
-    const url = `https://api.tomtom.com/traffic/services/5/incidentDetails?key=${apiKey}&bbox=${bbox}&fields=${INCIDENT_FIELDS}&language=en-GB&timeValidityFilter=present`;
-    try {
-      setError("");
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
-      const data = await res.json();
-      setGeojson(data);
-      onCount?.(data?.incidents?.length || 0);
-    } catch (e) {
-      setError(e.message || "Failed to load incidents");
-      setGeojson(null);
-      onCount?.(0);
+  if (!apiKey) return;
+  const b = map.getBounds();
+  const bbox = [b.getWest(), b.getSouth(), b.getEast(), b.getNorth()].join(',');
+
+  // minimal request first (no fields filter)
+  const url = `https://api.tomtom.com/traffic/services/5/incidentDetails?key=${apiKey}&bbox=${bbox}&language=en-GB&timeValidityFilter=present`;
+
+  try {
+    setError("");
+    const res = await fetch(url);
+    if (!res.ok) {
+      // read server message to see the real reason
+      const msg = await res.text();
+      throw new Error(`${res.status} ${res.statusText}: ${msg}`);
     }
+    const data = await res.json();
+    setGeojson(data);
+    onCount?.(data?.incidents?.length || 0);
+  } catch (e) {
+    setError(e.message || "Failed to load incidents");
+    setGeojson(null);
+    onCount?.(0);
   }
+}
+
 
   const categoryIcon = (cat) => {
     const m = { 1: "💥", 6: "🚗", 7: "🛑", 8: "⛔", 9: "🚧", 10: "💨", 11: "🌊" };
