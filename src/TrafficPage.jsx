@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, TileLayer, GeoJSON, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import maplibregl from "maplibre-gl";
+import "leaflet/dist/leaflet.css";
+import "maplibre-gl/dist/maplibre-gl.css";
 import {
   Activity,
   RefreshCw,
@@ -65,10 +67,11 @@ function DarkToggle({ dark, setDark }) {
 }
 
 function Header({ dark, setDark }) {
+  const logoUrl = `${import.meta.env.BASE_URL}logo.png`;
   return (
     <header className="w-full flex items-center justify-between py-4">
       <div className="flex items-center gap-3">
-        <img src="/logo.png" alt="CDA" className="h-9 w-9 rounded-2xl object-contain" />
+        <img src={logoUrl} alt="CDA" className="h-9 w-9 rounded-2xl object-contain" />
         <span className="font-semibold text-lg tracking-tight">CDA UK Traffic</span>
       </div>
       <div className="flex items-center gap-2">
@@ -89,10 +92,11 @@ function Tabs({ active, setActive }) {
         <button
           key={t.id}
           onClick={() => setActive(t.id)}
-          className={`px-3 py-2 rounded-xl text-sm border ${active === t.id
+          className={`px-3 py-2 rounded-xl text-sm border ${
+            active === t.id
               ? "bg-black text-white dark:bg-white dark:text-black"
               : "border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10"
-            }`}
+          }`}
         >
           {t.label}
         </button>
@@ -105,10 +109,11 @@ function LayerPill({ active, onClick, children }) {
   return (
     <button
       onClick={onClick}
-      className={`px-3 py-1.5 rounded-full text-xs border transition ${active
+      className={`px-3 py-1.5 rounded-full text-xs border transition ${
+        active
           ? "bg-black text-white dark:bg-white dark:text-black"
           : "border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10"
-        }`}
+      }`}
     >
       {children}
     </button>
@@ -128,7 +133,7 @@ function Controls({
   setAutoRefresh,
   refreshNow,
   roadTypes,
-  setRoadTypes
+  setRoadTypes,
 }) {
   const [expanded, setExpanded] = useState(true);
   return (
@@ -394,15 +399,7 @@ function ProbeBadge({ probe }) {
 }
 
 function LeafletRasterMap({ apiKey, flowStyle, showFlow, showIncidents, onIncidentCount, onProbe }) {
-  useEffect(() => {
-    if (!document.getElementById("leaflet-css")) {
-      const link = document.createElement("link");
-      link.id = "leaflet-css";
-      link.rel = "stylesheet";
-      link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-      document.head.appendChild(link);
-    }
-  }, []);
+  // Leaflet CSS is imported globally above; remove runtime injection.
 
   function MapClickProbe() {
     const map = useMapEvents({
@@ -461,7 +458,9 @@ function MapLibreVectorMap({ apiKey, flowType, roadTypes }) {
 
   useEffect(() => {
     if (!containerRef.current || !apiKey) return;
-    const flowTiles = `https://api.tomtom.com/traffic/map/4/tile/flow/${flowType}/{z}/{x}/{y}.pbf?key=${apiKey}` + (roadTypes ? `&roadTypes=${encodeURIComponent(roadTypes)}` : "");
+    const flowTiles =
+      `https://api.tomtom.com/traffic/map/4/tile/flow/${flowType}/{z}/{x}/{y}.pbf?key=${apiKey}` +
+      (roadTypes ? `&roadTypes=${encodeURIComponent(roadTypes)}` : "");
 
     const map = new maplibregl.Map({
       container: containerRef.current,
@@ -539,7 +538,7 @@ export default function TrafficPage() {
   const [activeTab, setActiveTab] = useLocalStorage("tab", "leaflet");
   const [flowStyle, setFlowStyle] = useLocalStorage("flow_style", "relative0-dark");
   const [showFlow, setShowFlow] = useLocalStorage("show_flow", true);
-  const [showIncidents, setShowIncidents] = useLocalStorage("show_incidents", true); // default ON
+  const [showIncidents, setShowIncidents] = useLocalStorage("show_incidents", true);
   const [autoRefresh, setAutoRefresh] = useLocalStorage("auto_refresh", true);
   const [incidentCount, setIncidentCount] = useState(0);
   const [probe, setProbe] = useState(null);
@@ -561,11 +560,11 @@ export default function TrafficPage() {
   useEffect(() => {
     if (!apiKey) return;
     const url = `https://api.tomtom.com/traffic/map/4/flow/1/unified/metadata.json?key=${apiKey}`;
-    fetch(url).then(r => r.ok ? r.json() : null).then(setFlowMeta).catch(() => {});
+    fetch(url).then((r) => (r.ok ? r.json() : null)).then(setFlowMeta).catch(() => {});
   }, [apiKey]);
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(75%_100%_at_50%_0%,rgba(14,165,233,0.12),transparent_60%)] dark:bg-[radial-gradient(75%_100%_at_50%_0%,rgba(14,165,233,0.18),transparent_60%)]">
+    <div className="min-h-screen bg-[#EEE2C9] dark:bg-[#2A2418]">
       <div className="max-w-6xl mx-auto px-4">
         <Header dark={dark} setDark={setDark} />
 
@@ -610,49 +609,28 @@ export default function TrafficPage() {
 
           {activeTab === "vector" &&
             (apiKey ? (
-              <MapLibreVectorMap apiKey={apiKey} flowType={flowStyle.includes("absolute") ? "absolute" : "relative"} roadTypes={roadTypes} />
+              <MapLibreVectorMap
+                apiKey={apiKey}
+                flowType={flowStyle.includes("absolute") ? "absolute" : "relative"}
+                roadTypes={roadTypes}
+              />
             ) : (
               <div className="rounded-2xl border border-black/10 dark:border-white/15 p-6 text-sm opacity-80">
                 Add your API key to view Vector Flow & Incident tiles.
               </div>
             ))}
-
         </div>
 
         <footer className="py-8 text-sm opacity-70">
           <div className="flex items-center gap-2 flex-wrap">
-            <span>© {new Date().getFullYear()} CDA UK Traffic</span>
+            <span>© {new Date().getFullYear()} Coach Drivers App, Version 1.0.0, Developed by Stephen Lewis.</span>
             <span className="mx-1">•</span>
-            <a
-              className="underline hover:opacity-100"
-              href="https://developer.tomtom.com/traffic-api/documentation/traffic-flow/vector-flow-tiles"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Vector Flow Tiles
-            </a>
+            <a className="underline hover:opacity-100" href="https://developer.tomtom.com/traffic-api/documentation/traffic-flow/vector-flow-tiles" target="_blank" rel="noreferrer">Vector Flow Tiles</a>
             <span className="mx-1">•</span>
-            <a
-              className="underline hover:opacity-100"
-              href="https://developer.tomtom.com/traffic-api/documentation/traffic-incidents/vector-incident-tiles"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Vector Incident Tiles
-            </a>
+            <a className="underline hover:opacity-100" href="https://developer.tomtom.com/traffic-api/documentation/traffic-incidents/vector-incident-tiles" target="_blank" rel="noreferrer">Vector Incident Tiles</a>
             <span className="mx-1">•</span>
-            <a
-              className="underline hover:opacity-100"
-              href="https://developer.tomtom.com/traffic-api/documentation/traffic-flow/flow-segment-data"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Flow Segment Data
-            </a>
-            {flowMeta?.version && (<>
-              <span className="mx-1">•</span>
-              <span className="opacity-70">Flow meta v{flowMeta.version}</span>
-            </>)}
+            <a className="underline hover:opacity-100" href="https://developer.tomtom.com/traffic-api/documentation/traffic-flow/flow-segment-data" target="_blank" rel="noreferrer">Flow Segment Data</a>
+            {flowMeta?.version && (<><span className="mx-1">•</span><span className="opacity-70">Flow meta v{flowMeta.version}</span></>)}
           </div>
         </footer>
       </div>

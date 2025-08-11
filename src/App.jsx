@@ -7,7 +7,7 @@ export default function App() {
     <BrowserRouter basename="/uk-traffic-viewer">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/app" element={<TrafficPage />} />
+        <Route path="/traffic" element={<TrafficPage />} /> {/* <- here */}
       </Routes>
     </BrowserRouter>
   );

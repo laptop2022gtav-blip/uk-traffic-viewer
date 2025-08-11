@@ -1,25 +1,31 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
+
+const logoUrl = `${import.meta.env.BASE_URL}logo.png`;
 
 export default function Home() {
   return (
-    <div className="min-h-screen grid place-items-center bg-[radial-gradient(75%_100%_at_50%_0%,rgba(14,165,233,0.18),transparent_60%)]">
-      <div className="w-[92vw] max-w-xl rounded-2xl border border-black/10 dark:border-white/15 bg-white/80 dark:bg-black/50 backdrop-blur p-8 text-center shadow">
-        <div className="mx-auto mb-4 h-16 w-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-sky-600 grid place-items-center text-white font-extrabold text-xl">
-          CDA
-        </div>
-        <h1 className="text-2xl font-semibold mb-2">CDA Live Traffic</h1>
-        <p className="opacity-75 mb-6">
-          Real‑time UK traffic maps, live incidents and analytics powered by TomTom.
+    <div className="min-h-screen grid place-items-center bg-[#EEE2C9] dark:bg-[#2A2418]">
+      <div className="w-[92vw] max-w-xl rounded-2xl border border-black/10 dark:border-white/15 bg-white/70 dark:bg-black/30 backdrop-blur p-10 shadow">
+        <img src={logoUrl} alt="CDA" className="mx-auto mb-4 h-24 w-24 rounded-2xl" />
+        <h1 className="text-2xl font-semibold text-center mb-2">Coach Drivers App</h1>
+        <h1 className="text-2xl font-semibold text-center mb-2">Live Traffic Updates</h1>
+        <p className="opacity-70 mb-6">
+          Real-time UK traffic maps, live incidents powered by TomTom, Provided by Coach Drivers App.
         </p>
         <Link
           to="/traffic"
-          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-medium shadow"
+          className="inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white shadow"
         >
-          🚦 Check Out Live Traffic
+          Check Out Live Traffic
         </Link>
       </div>
-      <footer className="absolute bottom-4 text-xs opacity-60">© {new Date().getFullYear()} CDA</footer>
+
+      <footer className="absolute bottom-4 text-xs opacity-60">
+        © {new Date().getFullYear()} Coach Drivers App, Version 1.0.0, Developed by Stephen Lewis.
+      </footer>
     </div>
-  )
+  );
 }
+
+
