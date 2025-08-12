@@ -8,7 +8,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-[#f4e1b1]">
       {/* Centered card area */}
       <div className="flex-grow flex items-center justify-center">
-        <div className="bg-white shadow-md rounded-lg p-6 text-center max-w-md">
+        <div className="bg-white text-gray-900 shadow-md rounded-lg p-6 text-center max-w-md">
           <img
             src={logoUrl}
             alt="Coach Drivers App Logo"
@@ -29,7 +29,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Footer always at bottom */}
+      {/* Footer at bottom */}
       <footer className="text-center text-sm text-gray-600 py-2">
         © {new Date().getFullYear()} Coach Drivers App. All rights reserved.
         Version 1.0.0. Designed by Stephen Lewis
