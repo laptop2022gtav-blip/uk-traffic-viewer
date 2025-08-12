@@ -2,7 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import "./index.css"; // @import "tailwindcss";
+import "./index.css";
 import "leaflet/dist/leaflet.css";
 import "maplibre-gl/dist/maplibre-gl.css";
 
@@ -14,7 +14,8 @@ createRoot(document.getElementById("root")).render(
     <BrowserRouter basename="/uk-traffic-viewer">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/app" element={<TrafficPage />} />
+        <Route path="/traffic" element={<TrafficPage />} /> {/* added */}
+        {/* optional: <Route path="*" element={<Navigate to="/" replace />} /> */}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
