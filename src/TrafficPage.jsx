@@ -623,7 +623,7 @@ export default function TrafficPage() {
 
         <footer className="py-8 text-sm opacity-70">
           <div className="flex items-center gap-2 flex-wrap">
-            <span>© {new Date().getFullYear()} Coach Drivers App, Version 1.0.0, Developed by Stephen Lewis.</span>
+            <span>© {new Date().getFullYear()} CDA UK Traffic</span>
             <span className="mx-1">•</span>
             <a className="underline hover:opacity-100" href="https://developer.tomtom.com/traffic-api/documentation/traffic-flow/vector-flow-tiles" target="_blank" rel="noreferrer">Vector Flow Tiles</a>
             <span className="mx-1">•</span>

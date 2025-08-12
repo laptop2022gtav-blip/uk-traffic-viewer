@@ -8,8 +8,7 @@ export default function Home() {
     <div className="min-h-screen grid place-items-center bg-[#EEE2C9] dark:bg-[#2A2418]">
       <div className="w-[92vw] max-w-xl rounded-2xl border border-black/10 dark:border-white/15 bg-white/70 dark:bg-black/30 backdrop-blur p-10 shadow">
         <img src={logoUrl} alt="CDA" className="mx-auto mb-4 h-24 w-24 rounded-2xl" />
-        <h1 className="text-2xl font-semibold text-center mb-2">Coach Drivers App</h1>
-        <h1 className="text-2xl font-semibold text-center mb-2">Live Traffic Updates</h1>
+        <h1 className="text-2xl font-semibold mb-2">CDA Live Traffic</h1>
         <p className="opacity-70 mb-6">
           Real-time UK traffic maps, live incidents powered by TomTom, Provided by Coach Drivers App.
         </p>
@@ -27,5 +26,6 @@ export default function Home() {
     </div>
   );
 }
+
 
 
